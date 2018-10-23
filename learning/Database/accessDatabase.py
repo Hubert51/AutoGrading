@@ -13,6 +13,7 @@ def create_database(cursor):
 
 
 
+
 con = mysql.connector.connect(
     user="Ruijie",
         password="gengruijie123",
@@ -33,6 +34,8 @@ if __name__ == '__main__':
                 print(err.msg)
     else:
                 print("OK")
+
+
 
 
     data=[
@@ -63,8 +66,9 @@ if __name__ == '__main__':
     query = "select * from Density"
     cur.execute(query)
     data = cur.fetchall()
-    print(data)
-
+    for i in data:
+        print(i)
+        # print("\n")
 
 
 
