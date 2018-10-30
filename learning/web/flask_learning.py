@@ -8,7 +8,7 @@ def index():
 
 @app.route("/hello")
 def hello_world():
-    return "hello world"
+    return "<h1>hello world!</h1>"
 
 @app.route("/user/<username>")
 def show_username(username):
