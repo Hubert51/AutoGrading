@@ -3,15 +3,21 @@ from flask import Flask
 from flask import make_response
 from flask import redirect
 from flask import abort
+from flask import Flask, render_template
 
 app=Flask(__name__)
 
 
 @app.route('/')
 def index():
- return "hello"
+    return render_template("html_learning.html")
 
-@app.route('/user/<id>')
+@app.route('/user/<name>')
+def user(name):
+ return render_template('user.html', name=name)
+
+
+@app.route('/users/<id>')
 def get_user(id):
 
  if id!='jia':
