@@ -16,7 +16,7 @@ def user(name):
 
 @app.route('/')
 def index():
-    return render_template("html_learning.html")
+    return render_template("bootstrap/base.html")
 
 
 
