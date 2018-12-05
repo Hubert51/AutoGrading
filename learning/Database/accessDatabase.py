@@ -22,7 +22,7 @@ con = mysql.connector.connect(
         password="gengruijie123",
         host="142.93.59.116",
         database="mysql"
-                              )
+)
 
 if __name__ == '__main__':
 

@@ -1,5 +1,8 @@
-from pytesseract import image_to_string, image_to_boxes
-from PIL import Image
+try:
+    from pytesseract import image_to_string, image_to_boxes
+    from PIL import Image
+except:
+    pass
 import sys
 import os
 import time

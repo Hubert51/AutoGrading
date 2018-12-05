@@ -1,7 +1,7 @@
 from __future__ import print_function
 import mysql.connector
 # from sample import database
-# from sample import database
+from sample.database import database
 from mysql.connector import errorcode
 import json
 

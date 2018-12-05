@@ -1,8 +1,6 @@
-# -*- coding: uk_UA.UTF-8 -*-
+
 import os
 #from main import grading
-
-
 from flask import Flask, render_template, request
 from flask import url_for, redirect
 from flask_dropzone import Dropzone

@@ -154,8 +154,6 @@ class Database(object):
 
         # a,b,c) VALUES(1,2,3,4,5,6,7,8,9);"
 
-
-
     def queryData(self, queryTable):
         query = "select * from {}".format(queryTable)
         self.cursor.execute(query)
@@ -166,6 +164,13 @@ class Database(object):
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def user_exist(self,user_name,user_password):
+        data = self.queryData("User_info")
+        for i in data:
+            if i[0] == user_name:
+                if i[1] == user_password:
+                    return True
+        return False
 
 
 

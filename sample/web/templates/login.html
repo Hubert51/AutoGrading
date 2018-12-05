@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="loginDiv">
-
+    	
         {# To do we need to move them into css.  #}
         <form action="{{ url_for("login") }}" method="POST", style="width:100%; text-align:center; margin:auto; ">
             <p>
@@ -22,9 +22,9 @@
             <p>
                 <input type="checkbox" name="remember_me"/>Remember Me
             </p>
-
                 {{ form.csrf_token }}
         </form>
+        <h3>{{get_flashed_messages()[0]}}</h3>
     </div>
 {% endblock %}
 

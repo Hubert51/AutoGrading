@@ -1,5 +1,6 @@
 import os
 import sys
+# <<<<<<< Updated upstream
 
 
 # two file is created by developers
@@ -29,6 +30,44 @@ from mysql.connector.cursor import MySQLCursor
 
 
 from flask_mail import Mail, Message
+# =======
+# from flask_wtf import FlaskForm
+# from flask_mail import Mail
+# import _mysql_connector
+# import mysql.connector
+# from mysql.connector.cursor import MySQLCursor
+
+try:
+    # two file is created by developers
+    # from main import grading
+    # from helperFunction import readAndSaveAnswerFile
+    from sample.web.helperFunction import saveImage, writeAnswer
+    import sample.database.database as database
+    import flask
+    from flask import Flask, render_template, request,flash
+    from flask import url_for, redirect
+    from flask_dropzone import Dropzone
+    import threading
+    import time
+    from multiprocessing import Process, Pool
+
+    # for user login
+    from flask_wtf import FlaskForm
+    from wtforms import StringField, BooleanField, PasswordField
+    from wtforms.validators import DataRequired
+    import mysql.connector
+
+    # ==================================================
+    # test for connect pythonanywhere
+    import mysql.connector
+    import sshtunnel
+    from mysql.connector.cursor import MySQLCursor
+    from flask_mail import Mail
+    from flask import Message
+
+except:
+    pass
+# >>>>>>> Stashed changes
 
 def connectDatabase(username, password):
     sshtunnel.SSH_TIMEOUT = 5.0
@@ -84,20 +123,16 @@ class RegistrationForm(FlaskForm):
 class MyThread(threading.Thread):
     def __init__(self):
         self.run()
-
-
     def run(self) -> object:
         print("{} started!".format(self.getName()))              # "Thread-x started!"
         time.sleep(1)                                      # Pretend to work for a second
         print("{} finished!".format(self.getName()))             # "Thread-x finished!"
-
 
 app = Flask(__name__)
 bootstrap=Bootstrap(app)
 
 
 mail=Mail(app)
-
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'haotian666666@gmail.com'
@@ -106,10 +141,14 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+# <<<<<<< Updated upstream
 
 
 
 
+# =======
+#
+# >>>>>>> Stashed changes
 # conn = mysql.connector.connect(
 #     user="root",
 #     password="gengruijie",
@@ -137,6 +176,7 @@ app.config.update(
 def index():
     return render_template("index.html")
 
+# <<<<<<< Updated upstream
 # @app.route("register", method=['POST','GET'])
 # def register():
 #    msg = Message('Hello', sender = 'haotian666666@gmail.com', recipients = ['651938023@qq.com'])
@@ -174,20 +214,21 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-
     form = LoginForm()
+    db = database.Database("Ruijie", "gengruijie123", "142.93.59.116", "Users")
+    print(db.show_database())
+    print(db.queryData("User_info"))
     if request.method == "POST":
-        # print(11231231)
         user = request.form.get("username")
         password = request.form.get("password")
-        data = connectDatabase(user, password)
-        if (  data[0] == False ):
-            return render_template('index.html')
-        global loginUsers
-        loginUsers.append((user, data))
-        # print(loginUsers)
-        return render_template('indexUser.html')
+        # user_name and password is correct
+        if db.user_exist(user,password):
+            return "welcome! You are logged in"
+        # not correct
+        else:
+            flash('user name or password is incorrect')
     return render_template('login.html', title="Sign In", form=form)
+
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
@@ -263,9 +304,15 @@ def myupload():
     return "ok"
 
 
+# <<<<<<< Updated upstream
 # @app.route('/register', methods=['GET'])
 # def register():
 #     return render_template('register.html')
+# =======
+@app.route('/register1', methods=['GET'])
+def register1():
+    return render_template('register.html')
+# >>>>>>> Stashed changes
 
 
 
@@ -330,21 +377,11 @@ def Scores():
         return render_template('ScoresProfessor.html', name=username,items =result )
 
 
-
-
-
-
 def flaskRun():
     # print(os.path.realpath(__file__))
     # print(os.path.dirname(os.path.realpath(__file__)))
 
     app.run(host='0.0.0.0', debug=True )
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
