@@ -1,10 +1,12 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Sign up{% endblock %}
 
-{% block head %}
-    <title>Register Page</title>
+{% block page_content %}
+    <div class="page-header">
+     <h1>{% if username and valid %}Hi, {{ username }}, you sign up successfully
+         {% elif username and not valid %}Please use another username
+         {% else  %} Greetings{% endif %} </h1>
+    </div>
+    {{ wtf.quick_form(form) }}
 {% endblock %}
-
-{% block body %}
-
-{% endblock %}
-

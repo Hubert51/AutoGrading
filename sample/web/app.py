@@ -6,21 +6,21 @@ import sys
 # from main import grading
 # from helperFunction import readAndSaveAnswerFile
 from sample.web.helperFunction import saveImage, writeAnswer
-
+import sample.database.database as database
 import flask
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,flash
 from flask import url_for, redirect
 from flask_dropzone import Dropzone
 import threading
 import time
 from multiprocessing import Process, Pool
 
-# for user login
+# for user loginpip
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, PasswordField
+from wtforms import StringField, BooleanField, PasswordField,validators, SubmitField
 from wtforms.validators import DataRequired
 import mysql.connector
-
+from flask_bootstrap import Bootstrap
 # ==================================================
 # test for connect pythonanywhere
 import mysql.connector
@@ -69,6 +69,17 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('remember me', default=False)
 
+class RegistrationForm(FlaskForm):
+
+    username = StringField('Username:\n', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address:\t', [validators.Length(min=6, max=35)])
+    password = PasswordField('New Password:\t', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password:\t')
+    is_professor = BooleanField('Are you a professor')
+    submit = SubmitField('Sign up')
 
 class MyThread(threading.Thread):
     def __init__(self):
@@ -82,6 +93,7 @@ class MyThread(threading.Thread):
 
 
 app = Flask(__name__)
+bootstrap=Bootstrap(app)
 
 
 mail=Mail(app)
@@ -98,12 +110,12 @@ mail = Mail(app)
 
 
 
-conn = mysql.connector.connect(
-    user="root",
-    password="gengruijie",
-    host="127.0.0.1",
-    database="Lemma"
-)
+# conn = mysql.connector.connect(
+#     user="root",
+#     password="gengruijie",
+#     host="127.0.0.1",
+#     database="Lemma"
+# )
 
 # to config upload file
 app.wsgi_app = app.wsgi_app
@@ -125,12 +137,40 @@ app.config.update(
 def index():
     return render_template("index.html")
 
-@app.route("register", method=['POST','GET'])
+# @app.route("register", method=['POST','GET'])
+# def register():
+#    msg = Message('Hello', sender = 'haotian666666@gmail.com', recipients = ['651938023@qq.com'])
+#    msg.body = "Hello Flask message sent from Flask-Mail"
+#    mail.send(msg)
+#    return "Sent"
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-   msg = Message('Hello', sender = 'haotian666666@gmail.com', recipients = ['651938023@qq.com'])
-   msg.body = "Hello Flask message sent from Flask-Mail"
-   mail.send(msg)
-   return "Sent"
+    username=None
+    valid=True
+    form = RegistrationForm()
+    if request.method == 'POST' and form.validate():
+        username = form.username.data
+        email = form.email.data
+        db=database.Database("Ruijie", "gengruijie123", "142.93.59.116", "Users")
+        cursor=db.get_cursor()
+        cursor.execute("SELECT * FROM User_info where username='{}' or email='{}'".format(username,email))
+        tem=cursor.fetchall()
+        print(tem)
+        if(tem!=[]):
+            valid = False
+
+        else:
+            password=form.password.data
+
+            is_professor=form.is_professor.data
+            db.insert_data("User_info",[("username",username),("password",password),("email",email),("is_professor",is_professor)])
+
+
+        # flash('Thanks for registering')
+        # return redirect(url_for('login'))
+    return render_template('register.html', form=form,username=username,valid=valid)
+
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -223,9 +263,9 @@ def myupload():
     return "ok"
 
 
-@app.route('/register', methods=['GET'])
-def register():
-    return render_template('register.html')
+# @app.route('/register', methods=['GET'])
+# def register():
+#     return render_template('register.html')
 
 
 
