@@ -216,17 +216,21 @@ def register():
 def login():
     form = LoginForm()
     db = database.Database("Ruijie", "gengruijie123", "142.93.59.116", "Users")
-    print(db.show_database())
-    print(db.queryData("User_info"))
+    # print(db.show_database())
+    # print(db.queryData("User_info"))
+
     if request.method == "POST":
         user = request.form.get("username")
         password = request.form.get("password")
+        if not user or not password:
+            flash('please enter the username and password')
         # user_name and password is correct
         if db.user_exist(user,password):
             return "welcome! You are logged in"
         # not correct
         else:
             flash('user name or password is incorrect')
+
     return render_template('login.html', title="Sign In", form=form)
 
 
