@@ -69,9 +69,12 @@ class Database(object):
         if database == None:
             print("Please use show_tables(database) in this function call")
             exit(1)
-        query = "DROP DATABASE {};".format(database)
-        self.cursor.execute(query)
-        print("Drop database {} successfully".format(database))
+        try:
+            query = "DROP DATABASE {};".format(database)
+            self.cursor.execute(query)
+            print("Drop database {} successfully".format(database))
+        except mysql.connector.Error as err:
+            print(err.msg)
 
     def drop_table(self,table):
         try:

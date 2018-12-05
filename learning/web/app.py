@@ -21,26 +21,16 @@ from multiprocessing import Process, Pool
 # from wtforms.validators import DataRequired
 import mysql.connector
 # connect database
-cnx = mysql.connector.connect(
-    user="Ruijie",
-    password="gengruijie123",
-    host="142.93.59.116",
-    database="mysql"
-)
-
-# create flask application
 app = Flask(__name__)
+@app.route('/user/<username>')
+def show_user_profile(username):
+    # show the user profile for that user
+    return 'User %s' % username
 
-@app.route('/main', methods=['POST', 'GET'])
-def getData():
-    cursor = cnx.cursor()
-    query = "show databases;"
-    cursor.execute(query)
-
-    data = cursor.fetchall()
-    string = str(data)
-    # print(cursor.fetchall())
-    return string
+@app.route('/post/<int:post_id>')
+def show_post(post_id):
+    # show the post with the given id, the id is an integer
+    return 'Post %d' % post_id
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True )

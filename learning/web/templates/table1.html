@@ -1,0 +1,22 @@
+
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Sign up{% endblock %}
+{% block page_content %}
+<div class="page-header">
+ <h1>FaQ, {% if username  %}Your username is : {{ username }}{% else %}Sir{% endif %}!</h1>
+</div>
+{{ wtf.quick_form(form) }}
+{% endblock %}
+
+{#<form class="form" method="POST">#}
+{# {{ form.hidden_tag() }}#}
+{# {{ form.name.label }} {{ form.name(id='my-text-field') }}#}
+{# {{ form.submit() }}#}
+{#</form>#}
+{#<form method="POST">#}
+{#    {{ form.csrf_token }}#}
+{#    {{ form.name.label }} {{ form.name(size=20) }}#}
+{#    <input type="submit" value="确认">#}
+{#</form>#}
