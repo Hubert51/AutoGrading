@@ -1,6 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Autograding System</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link href= "{{ url_for('static', filename = 'css/mysite.css') }}"
@@ -19,10 +21,15 @@
         <li class = "list1"><a href="#news"> Demo </a></li>
         <li class = "list1"><a href="{{ url_for('grading')}}"> Grading </a></li>
         <li class = "login1" ><a href="{{ url_for('login')}}"> Login </a></li>
+        <li class = "login1" ><a href="{{ url_for('register')}}"> Sign up </a></li>
+
     </ul>
   </div>
+    {% extends "bootstrap/base.html" %}
     {% block body %}
         <h1>这个标题在双亲模板中定义</h1>
     {% endblock %}
+
+
 
 </body>

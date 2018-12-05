@@ -27,6 +27,11 @@ class Database(object):
             else:
                 print(err)
                 exit(1)
+    def get_cursor(self):
+        return self.cursor
+
+    def get_cnx(self):
+        return self.cnx
 
     def create_database(self, my_database):
         try:
@@ -129,15 +134,16 @@ class Database(object):
         #     raise RuntimeError
 
         # print(data[0][1])
-        data[0][1] = "\'" + str(data[0][1]) + "'"
+        # data[0][1] = "\'" + str(data[0][1]) + "'"
         query = "INSERT INTO {} (".format(table)
         for item in data:
             query += "{} ,".format(item[0])
         query = query.strip(",") + ") VALUES("
 
         for item in data:
-            if type(item[1]) == list:
-                query = query + "\' {} \',".format(item[1])
+            print(type(item[1]))
+            if type(item[1]) == str:
+                query = query + "\'{}\',".format(item[1])
             else:
                 query += "{},".format(item[1])
         query = query.strip(",") + ");"
@@ -159,6 +165,7 @@ class Database(object):
         query = "select {} from {}".format(', '.join(cols), querTable)
         self.cursor.execute(query)
         return self.cursor.fetchall()
+
 
 
 
