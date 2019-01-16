@@ -155,11 +155,20 @@ class Database(object):
         # a,b,c) VALUES(1,2,3,4,5,6,7,8,9);"
 
     def queryData(self, queryTable):
+        """
+        :param queryTable: string, the table we want to query
+        :return: list, contains
+        this function .....
+        """
         query = "select * from {}".format(queryTable)
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+
     def queryColsData(self, querTable, cols):
+        if type(cols) != list:
+            raise ("please input a list of cols")
+            return
         query = "select {} from {}".format(', '.join(cols), querTable)
         self.cursor.execute(query)
         return self.cursor.fetchall()

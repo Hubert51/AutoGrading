@@ -2,9 +2,15 @@ from pytesseract import image_to_string
 from PIL import Image
 import cv2
 import numpy
+import sys
 
 
 if __name__ == '__main__':
+    f = open("test1.txt")
+    f = f.read()
+    for element in f:
+        str1 = element
+
     position = ((712, 571), (725, 587))
     dh = position[1][1] - position[0][1]
     upper = position[0][1] - 2 * dh
