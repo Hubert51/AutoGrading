@@ -171,6 +171,10 @@ app.config.update(
     DROPZONE_MAX_FILES=30
 )
 
+@app.route('/demo', methods=['POST', 'GET'])
+def demo():
+    return render_template("demo.html")
+
 # sys.setdefaultencoding('Cp1252')
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -191,7 +195,7 @@ def register():
     if request.method == 'POST' and form.validate():
         username = form.username.data
         email = form.email.data
-        db=database.Database("Ruijie", "gengruijie123", "142.93.59.116", "Users")
+        db=database.Database("Ruijie", "hhh", "142.93.59.116", "Users")
         cursor=db.get_cursor()
         cursor.execute("SELECT * FROM User_info where username='{}' or email='{}'".format(username,email))
         tem=cursor.fetchall()
@@ -215,7 +219,7 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
-    db = database.Database("Ruijie", "gengruijie123", "142.93.59.116", "Users")
+    db = database.Database("Ruijie", "hhh", "142.93.59.116", "Users")
     # print(db.show_database())
     # print(db.queryData("User_info"))
 
