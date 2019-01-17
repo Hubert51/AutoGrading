@@ -103,3 +103,13 @@ def FileMoniter():
             allfile = newfile
 
 
+#################################################
+### Following code is test code
+#################################################
+
+
+# cv2.drawContours(im,[cnt1],-1,(255,0,0), 2)
+# cv2.circle(im, (x1, y1+h1), 5, (0, 0, 255), 1)
+#
+# cv2.imshow('im', im)
+# cv2.waitKey(0)

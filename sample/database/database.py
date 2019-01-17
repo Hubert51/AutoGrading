@@ -123,6 +123,7 @@ class Database(object):
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    '''
     # INSERT INTO tbl_name (col1,col2) VALUES(15,col1*2);
 
     def insert_data(self,table, data):
@@ -153,6 +154,57 @@ class Database(object):
         self.cnx.commit()
 
         # a,b,c) VALUES(1,2,3,4,5,6,7,8,9);"
+    '''
+    def insert_data(self, data,table=None):
+        if table == None:
+            table = self.table
+
+        if type(data[0]) == list or type(data[0]) == tuple:
+            column = self.describe_table(table)
+            # data[0][1] = "\'" + data[0][1] + "'"
+            query = "INSERT INTO {} (".format(table)
+            for item in data:
+                query += "{} ,".format(item[0])
+            query = query.strip(",") + ") VALUES("
+
+            for index in range(len(data)):
+                # column[index][1] is the data type of this column
+                # if "char" in column[index][1]:
+                #     data[index][1] = "\'" + data[index][1] + "'"
+
+                query += "{},".format(data[index][1])
+            query = query.strip(",") + ");"
+            # print(query)
+            # self.cursor.execute(query)
+            # self.cnx.commit()
+
+        else:
+            column = self.describe_table(table)
+            insert_key = []
+            for item in column:
+                if item[5] == "auto_increment":
+                    continue
+                insert_key.append(item[0])
+
+            # data[0][1] = "\'" + data[0][1] + "'"
+            query = "INSERT INTO {} (".format(table)
+            for item in insert_key:
+                query += "{} ,".format(item)
+            query = query.strip(",") + ") VALUES("
+
+            for item in data:
+                if type(item) == str:
+                    item = item.replace("'", "")
+                query += "'{}',".format(item)
+            query = query.strip(",") + ");"
+            # print(query)
+        try:
+            print(query)
+            self.cursor.execute(query)
+            self.cnx.commit()
+            print("OK")
+        except mysql.connector.Error as err:
+            print(err.msg)
 
     def queryData(self, queryTable):
         """

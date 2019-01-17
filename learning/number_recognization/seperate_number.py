@@ -59,7 +59,8 @@ def add_answer(image, key_image, sample_image):
 
 
 def store_data(samples, responses, myDB):
-    db = database.database.Database("Ruijie", "gengruijie123", "142.93.59.116", myDB)
+    db = database.database.Database("Ruijie", "XXXXXXXX", "142.93.59.116", myDB)
+    assert len(samples) == len(responses)
     # db.drop_table("machine_learning")
     # db.create_tables("machine_learning", [ ["id", "int NOT NULL AUTO_INCREMENT"], ["result", "int"], ["img", "JSON"] ], "id")
     for i in range(len(samples)):
